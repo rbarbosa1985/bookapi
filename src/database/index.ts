@@ -4,10 +4,15 @@ import mongoose from 'mongoose';
 class DbConnection {
 	async connect() {
 		try {
-			await mongoose.connect(process.env.NODE_ENV);
-			console.log('connect to database');
+			const db = process.env.NODE_ENV;
+			if (db) {
+				await mongoose.connect(db);
+				console.log('connect to database');
+			} else {
+				console.log('Error process env');
+			}
 		} catch (error) {
-			console.log('Error to coneect database: ' + error);
+			console.log('Error to connect database: ' + error);
 		}
 	}
 }
