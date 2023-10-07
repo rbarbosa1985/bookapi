@@ -7,14 +7,15 @@ const userRoutes = new UserRoutes().getRoutes();
 const database = new DbConnection();
 
 app.use(express.json());
-app.use('/', userRoutes);
+app.use('/users', userRoutes);
 
 app.use(express.urlencoded({ extended: true }));
 database.connect();
 app.use((err: Error, request: Request, response: Response) => {
+	console.log('Console log' + err);
 	if (err instanceof Error) {
 		return response.status(400).json({
-			message: err.message
+			message: err.message,
 		});
 	}
 

@@ -10,7 +10,9 @@ class UserRoutes {
 	}
 
 	getRoutes() {
-		this.router.get('/users', this.userController.index.bind(this.userController));
+		this.router.get('/', this.userController.index.bind(this.userController));
+		this.router.get('/paged', this.userController.indexPaged.bind(this.userController));
+		this.router.post('/', this.userController.store.bind(this.userController));
 		return this.router;
 	}
 
