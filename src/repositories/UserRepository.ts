@@ -23,6 +23,11 @@ class UserRepository {
 		return result;
 	}
 
+	async findById(id: string) {
+		const result = await User.findById(id);
+		return result;
+	}
+
 	async findByEmail(email: string) {
 		const result = await User.findOne({ email });
 		return result;
@@ -30,6 +35,16 @@ class UserRepository {
 
 	async createUser({ name, password, email }: ICreate) {
 		const result = await User.create({ name, password, email });
+		return result;
+	}
+
+	async updatePassword(id: string, password: string) {
+		const result = await User.findById(id).updateOne({ password });
+		return result;
+	}
+
+	async updateName(id: string, name: string) {
+		const result = await User.findById(id).updateOne({ name });
 		return result;
 	}
 }

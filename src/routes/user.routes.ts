@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { UserController } from '../controllers/UserController';
 
 class UserRoutes {
@@ -12,6 +13,8 @@ class UserRoutes {
 	getRoutes() {
 		this.router.get('/', this.userController.index.bind(this.userController));
 		this.router.get('/paged', this.userController.indexPaged.bind(this.userController));
+		this.router.get('/:id', this.userController.show.bind(this.userController));
+		this.router.put('/:id', this.userController.update.bind(this.userController));
 		this.router.post('/', this.userController.store.bind(this.userController));
 		return this.router;
 	}
