@@ -89,6 +89,20 @@ class UserController {
 		}
 	}
 
+	async delete(request: Request, response: Response, next: NextFunction) {
+		const { id } = request.params;
+		try {
+			const user = await this.userRepository.findById(id);
+			if (!user) {
+				throw new Error('User not found.');
+			}
+			const result = await this.userRepository.delete(id);
+			return response.json(result);
+		} catch (error) {
+			next(error);
+		}
+	}
+
 }
 
 export { UserController };

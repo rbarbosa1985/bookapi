@@ -13,5 +13,26 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-export { User };
+const bookSchema = new mongoose.Schema({
+	_id: {
+		type: String,
+		default: uuid()
+	},
+	name: String,
+	author: String,
+	company: String,
+	read: Boolean,
+	dateRead: Date,
+	description: String,
+	rate: Number,
+	user_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	}
+});
+
+const Book = mongoose.model('Book', bookSchema);
+
+export { User, Book };
 

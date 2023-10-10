@@ -47,6 +47,11 @@ class UserRepository {
 		const result = await User.findById(id).updateOne({ name });
 		return result;
 	}
+
+	async delete(id: string) {
+		const result = await User.findById(id).deleteOne();
+		return result;
+	}
 }
 
 export { UserRepository };
