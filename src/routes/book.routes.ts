@@ -14,7 +14,7 @@ class BookRoutes {
 
 	getRoutes(): Router {
 		this.router.post('/', this.authMiddleware.auth.bind(this.authMiddleware), this.bookController.store.bind(this.bookController));
-
+		this.router.get('/', this.authMiddleware.auth.bind(this.authMiddleware), this.bookController.index.bind(this.bookController));
 
 
 		return this.router;

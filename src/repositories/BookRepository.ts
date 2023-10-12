@@ -5,10 +5,15 @@ interface ICreate {
 	author: string,
 	company: string,
 	read: boolean,
-	dateRead: Date,
+	dateRead: Date | null,
 	description: string,
 	rate: number,
 	user_id: string
+}
+
+interface IPage {
+	size: number,
+	page: number
 }
 
 class BookRepository {
@@ -23,6 +28,10 @@ class BookRepository {
 		return result;
 	}
 
+	async findByUserIdPaged(user_id: string, { size, page }: IPage) {
+		const result = await Book.find({ user_id }).skip((page - 1) * size).limit(size).exec();
+		return result;
+	}
 }
 
 export { BookRepository };
