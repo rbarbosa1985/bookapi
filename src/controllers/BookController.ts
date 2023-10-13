@@ -45,24 +45,43 @@ class BookController {
 		}
 	}
 
-	// async update(request: Request, response: Response, next: NextFunction) {
-	// 	const { name, author, company, read, dateRead, descriptopn, rate } = request.body;
-	// 	const { user_id } = request;
-	// 	try {
+	async update(request: Request, response: Response, next: NextFunction) {
+		const { id } = request.params;
+		const { user_id } = request;
+		try {
+			const findBookById = await this.bookRepository.findById(id, user_id);
+			if (findBookById.length <= 0) {
+				throw new Error('Book not exist!');
+			}
+			const result = await this.bookRepository.delete(id);
+			return response.json(result);
+		} catch (error) {
+			next(error);
+		}
+	}
 
-	// 	} catch (error) {
-	// 		next(error);
-	// 	}
-	// }
-	// async delete(request: Request, response: Response, next: NextFunction) {
-	// 	const { name, author, company, read, dateRead, descriptopn, rate } = request.body;
-	// 	const { user_id } = request;
-	// 	try {
+	async delete(request: Request, response: Response, next: NextFunction) {
+		const { id } = request.params;
+		const { user_id } = request;
+		const { rate } = request.body;
+		try {
+			if (!rate) {
+				throw new Error('Rate not found.');
+			}
+			if (rate < 0 || rate > 5) {
+				throw new Error('Only rate between 0 and 5.');
+			}
+			const findBookById = await this.bookRepository.findById(id, user_id);
+			if (findBookById.length <= 0) {
+				throw new Error('Book not exist!');
+			}
 
-	// 	} catch (error) {
-	// 		next(error);
-	// 	}
-	// }
+			const result = await this.bookRepository.update({ id, rate: rate, read: true, dateRead: new Date() });
+			return response.json(result);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 export { BookController };
